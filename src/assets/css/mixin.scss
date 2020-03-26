@@ -1,0 +1,119 @@
+/*
+ * 混合
+ */
+
+ @import './reset.scss';
+
+/* 清除浮动 */
+@mixin cf {
+  &:after {
+    content: " ";
+    clear: both;
+    display: table;
+  }
+}
+
+// text overflow
+@mixin text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// 限制显示几行文字，仅支持chrome、safari等webkit内核浏览器
+@mixin line-clamp($lines) {
+  overflow: hidden;
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+}
+
+/* 三角形 */
+// $direction: top, right, bottom, left
+@mixin delta($direction, $size, $color) {
+  display: inline-block;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  font: 0px/9999px serif;
+  @if $direction == top {
+    border-width:0 $size $size;
+    border-style:dashed dashed solid;
+    border-color:transparent transparent $color;
+  } @else if $direction == right {
+    border-width:$size 0 $size $size;
+    border-style:dashed dashed dashed solid;
+    border-color:transparent transparent transparent $color;
+  } @else if $direction == bottom {
+    border-width:$size $size 0;
+    border-style:solid dashed dashed;
+    border-color:$color transparent transparent;
+  } @else if $direction == left {
+    border-width:$size $size $size 0;
+    border-style:dashed solid dashed dashed;
+    border-color:transparent $color transparent transparent;
+  }
+}
+
+// 箭头，支持IE9+
+// $direction: top, right, bottom, left
+@mixin angle($direction, $size, $weight, $color) {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+  width: $size;
+  height: $size;
+  font: 0px/9999px serif;
+  border-style: solid;
+  transform: rotate(-45deg);
+  @if $direction == top {
+    border-width: $weight $weight 0 0;
+    border-color: $color;
+  } @else if $direction == right {
+    border-width: 0 $weight $weight 0;
+    border-color: $color;
+  } @else if $direction == bottom {
+    border-width: 0 0 $weight $weight;
+    border-color: $color;
+  } @else if $direction == left {
+    border-width: $weight 0 0 $weight;
+    border-color: $color;
+  }
+}
+
+// 渐变色 Gradients，支持IE10+
+// 水平方向，从左到右
+// Creates two color stops, start and end, by specifying a color and position for each color stop.
+@mixin gradient-x($start-color: #007bff, $end-color: #6f42c1, $start-percent: 0%, $end-percent: 100%) {
+  background-image: linear-gradient(to right, $start-color $start-percent, $end-color $end-percent);
+  background-repeat: repeat-x;
+}
+
+// 垂直方向，从上到下
+// Creates two color stops, start and end, by specifying a color and position for each color stop.
+@mixin gradient-y($start-color: #007bff, $end-color: #6f42c1, $start-percent: 0%, $end-percent: 100%) {
+  background-image: linear-gradient(to bottom, $start-color $start-percent, $end-color $end-percent);
+  background-repeat: repeat-x;
+}
+
+@mixin gradient-directional($start-color: #007bff, $end-color: #6f42c1, $deg: 45deg) {
+  background-image: linear-gradient($deg, $start-color, $end-color);
+  background-repeat: repeat-x;
+}
+@mixin gradient-x-three-colors($start-color: #007bff, $mid-color: #6f42c1, $color-stop: 50%, $end-color: #dc3545) {
+  background-image: linear-gradient(to right, $start-color, $mid-color $color-stop, $end-color);
+  background-repeat: no-repeat;
+}
+@mixin gradient-y-three-colors($start-color: #007bff, $mid-color: #6f42c1, $color-stop: 50%, $end-color: #dc3545) {
+  background-image: linear-gradient($start-color, $mid-color $color-stop, $end-color);
+  background-repeat: no-repeat;
+}
+@mixin gradient-radial($inner-color: #007bff, $outer-color: #6f42c1) {
+  background-image: radial-gradient(circle, $inner-color, $outer-color);
+  background-repeat: no-repeat;
+}
+@mixin gradient-striped($color: rgba(255, 255, 255, .15), $angle: 45deg) {
+  background-image: linear-gradient($angle, $color 25%, transparent 25%, transparent 50%, $color 50%, $color 75%, transparent 75%, transparent);
+}
