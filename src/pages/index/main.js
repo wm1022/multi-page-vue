@@ -6,11 +6,20 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 import userAuthority from '../../plugin/user-authority'
+import api from '../../plugin/api'
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
 Vue.use(userAuthority)
+Vue.use(api, {
+  store,
+  axiosConfig: {
+    baseURL: '/'
+    // baseURL: 'https://apiv3.diyigaokao.com/'
+    // baseURL: process.env.NODE_ENV === 'production' ? (window.$API_DOMAIN || '/') : 'http://test.yishengya.cn/'
+  }
+})
 
 router.beforeEach((to, from, next) => {
   // 未登录

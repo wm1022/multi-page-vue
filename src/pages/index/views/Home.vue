@@ -67,14 +67,23 @@ export default {
       }
       this.$store.commit('updateUser', payload)
       this.activeAuthority = this.userMap[this.activeIndex][this.app.user.utype]
+      // 模拟登录后accessToken
+      if (this.app.user.utype !== 0) {
+        this.$store.commit('updateAccessToken', 'fehfi898jbnnn_ii8uyuc')
+      }
     },
     handler () {
       this.$message.success('成功')
+    },
+    getList () {
+      this.$api.get('/api/list')
     }
   },
   created () {
     // 获取当前用户权限
+    this.activeIndex = this.app.user.utype === 0 ? 0 : this.userMap.findIndex(el => Object.keys(el)[0] === this.app.user.utype)
     this.activeAuthority = this.userMap[this.activeIndex][this.app.user.utype]
+    this.getList()
     // 计算属性的set, 可以触发vuex更新，但是如果更新某个具体的属性，vuex还是会报警告
     // this.user = {
     //   userName: 111,

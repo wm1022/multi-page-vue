@@ -1,5 +1,12 @@
 const path = require('path')
 const glob = require('glob')
+const express = require('express')
+const app = express()
+const appData = require('./data.json')
+
+const list = appData.list
+
+// const apiRoutes = express.Router()
 
 // 配置需要打包的页面，实现按需打包
 const PAGE_PATH_NAME = ['index']
@@ -47,6 +54,22 @@ module.exports = {
           @import "~@/assets/css/mixin.scss";
         `
       }
+    }
+  },
+  devServer: {
+    before (app) {
+      app.get('/api/list', function (req, res) {
+        res.json({
+          error: 0,
+          data: list
+        }) 
+      }),
+      app.get('/app/accessToken', function (req, res) {
+        res.json({
+          error: 0,
+          data: '34tggrrrrrrrrrrr6'
+        }) 
+      })
     }
   }
 }
